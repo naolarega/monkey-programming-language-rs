@@ -1,43 +1,42 @@
 use std::fmt::{Display, Formatter, Result};
 
-#[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum TokenType {
-    ILLEGAL,
-    EOF,
+    Illegal,
+    Eof,
 
     // Identifiers + literals
-    IDENT,
-    INT,
+    Ident,
+    Int,
 
     // Operators
-    ASSIGN,
-    PLUS,
-    MINUS,
-    BANG,
-    ASTERISK,
-    SLASH,
-    LT,
-    GT,
-    EQ,
-    NOT_EQ,
+    Assign,
+    Plus,
+    Minus,
+    Bang,
+    Asterisk,
+    Slash,
+    Lt,
+    Gt,
+    Eq,
+    NotEq,
 
     // Delimiters
-    COMMA,
-    SEMICOLON,
-    LPAREN,
-    RPAREN,
-    LBRACE,
-    RBRACE,
+    Comma,
+    Semicolon,
+    Lparen,
+    Rparen,
+    Lbrace,
+    Rbrace,
 
     // KeyWords
-    FUNCTION,
-    LET,
-    TRUE,
-    FALSE,
-    IF,
-    ELSE,
-    RETURN,
+    Function,
+    Let,
+    True,
+    False,
+    If,
+    Else,
+    Return,
 }
 
 impl Display for TokenType {
@@ -45,33 +44,33 @@ impl Display for TokenType {
         use TokenType::*;
 
         let string_token_type = match self {
-            ILLEGAL => "ILLEGAL",
-            EOF => "EOF",
-            IDENT => "IDENT",
-            INT => "INT",
-            ASSIGN => "=",
-            PLUS => "+",
-            MINUS => "-",
-            BANG => "!",
-            ASTERISK => "*",
-            SLASH => "/",
-            LT => "<",
-            GT => ">",
-            EQ => "==",
-            NOT_EQ => "!=",
-            COMMA => ",",
-            SEMICOLON => ";",
-            LPAREN => "(",
-            RPAREN => ")",
-            LBRACE => "{",
-            RBRACE => "}",
-            FUNCTION => "FUNCTION",
-            LET => "LET",
-            TRUE => "TRUE",
-            FALSE => "FALSE",
-            IF => "IF",
-            ELSE => "ELSE",
-            RETURN => "RETURN",
+            Illegal => "ILLEGAL",
+            Eof => "EOF",
+            Ident => "IDENT",
+            Int => "INT",
+            Assign => "=",
+            Plus => "+",
+            Minus => "-",
+            Bang => "!",
+            Asterisk => "*",
+            Slash => "/",
+            Lt => "<",
+            Gt => ">",
+            Eq => "==",
+            NotEq => "!=",
+            Comma => ",",
+            Semicolon => ";",
+            Lparen => "(",
+            Rparen => ")",
+            Lbrace => "{",
+            Rbrace => "}",
+            Function => "FUNCTION",
+            Let => "LET",
+            True => "TRUE",
+            False => "FALSE",
+            If => "IF",
+            Else => "ELSE",
+            Return => "RETURN",
         };
 
         write!(formatter, "{}", string_token_type)
@@ -79,13 +78,13 @@ impl Display for TokenType {
 }
 
 pub const KEYWORDS: [(&str, TokenType); 7] = [
-    ("fn", TokenType::FUNCTION),
-    ("let", TokenType::LET),
-    ("true", TokenType::TRUE),
-    ("false", TokenType::FALSE),
-    ("if", TokenType::IF),
-    ("else", TokenType::ELSE),
-    ("return", TokenType::RETURN),
+    ("fn", TokenType::Function),
+    ("let", TokenType::Let),
+    ("true", TokenType::True),
+    ("false", TokenType::False),
+    ("if", TokenType::If),
+    ("else", TokenType::Else),
+    ("return", TokenType::Return),
 ];
 
 pub fn look_up_ident(ident: &str) -> Option<TokenType> {
@@ -98,7 +97,7 @@ pub fn look_up_ident(ident: &str) -> Option<TokenType> {
     })
 }
 
-#[derive(PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct Token {
     token_type: TokenType,
     literal: String,

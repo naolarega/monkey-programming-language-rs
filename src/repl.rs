@@ -41,7 +41,11 @@ where
             let mut line = String::new();
 
             match buf_reader.read_line(&mut line) {
-                Ok(_) => {
+                Ok(bytes_read) => {
+                    if bytes_read == 0 {
+                        continue;
+                    }
+
                     let lexer = Lexer::new(line);
 
                     for token in lexer {

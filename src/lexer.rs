@@ -37,34 +37,38 @@ impl Lexer {
                 '=' => {
                     if self.peek_char() == '=' {
                         self.read_char();
+
                         literal = Some(String::from("=="));
-                        EQ
+
+                        Eq
                     } else {
-                        ASSIGN
+                        Assign
                     }
                 }
-                ';' => SEMICOLON,
-                '(' => LPAREN,
-                ')' => RPAREN,
-                ',' => COMMA,
-                '+' => PLUS,
-                '-' => MINUS,
+                ';' => Semicolon,
+                '(' => Lparen,
+                ')' => Rparen,
+                ',' => Comma,
+                '+' => Plus,
+                '-' => Minus,
                 '!' => {
                     if self.peek_char() == '=' {
                         self.read_char();
+
                         literal = Some(String::from("!="));
-                        NOT_EQ
+
+                        NotEq
                     } else {
-                        BANG
+                        Bang
                     }
                 }
-                '/' => SLASH,
-                '*' => ASTERISK,
-                '<' => LT,
-                '>' => GT,
-                '{' => LBRACE,
-                '}' => RBRACE,
-                '\0' => EOF,
+                '/' => Slash,
+                '*' => Asterisk,
+                '<' => Lt,
+                '>' => Gt,
+                '{' => Lbrace,
+                '}' => Rbrace,
+                '\0' => Eof,
                 _ => {
                     if is_letter(&self.ch) {
                         literal = Some(self.read_identifier());
@@ -74,7 +78,7 @@ impl Lexer {
                             if let Some(token_type) = look_up_ident(ident) {
                                 token_type
                             } else {
-                                IDENT
+                                Ident
                             }
                         } else {
                             unreachable!()
@@ -83,9 +87,9 @@ impl Lexer {
                         literal = Some(self.read_number());
                         already_read = true;
 
-                        INT
+                        Int
                     } else {
-                        ILLEGAL
+                        Illegal
                     }
                 }
             },
@@ -172,7 +176,7 @@ impl Iterator for Lexer {
     fn next(&mut self) -> Option<Self::Item> {
         let token = self.next_token();
 
-        if let TokenType::EOF = token.token_type() {
+        if let TokenType::Eof = token.token_type() {
             return None;
         }
 
